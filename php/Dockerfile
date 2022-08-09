@@ -1,3 +1,5 @@
+#Ref: https://github.com/refresher/glpi-docker-alpine.git
+
 FROM php:fpm-alpine3.16
 
 RUN apk add --no-cache openldap-dev mariadb-dev libxml2-dev libxml2 libpng-dev icu-dev libzip-dev libzip xmlrpc-c
