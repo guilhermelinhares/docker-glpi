@@ -1,4 +1,4 @@
-# Docker Glpi  Alpine
+# Docker Glpi
 
 
 ![GLPI Logo](https://raw.githubusercontent.com/glpi-project/glpi/main/pics/logos/logo-GLPI-250-black.png)
