@@ -17,15 +17,16 @@ services:
     container_name: glpi
     depends_on: 
       - mysql
-    image: almalinux:minimal
+    image: almalinux/8-init
     privileged: true
     tty: true
     restart: always
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - /usr/share/glpi/:/usr/share/glpi
+      - /glpi/:/usr/share/glpi
     hostname: glpi
+    command: "/usr/sbin/init"
     environment:
       - TIMEZONE=America/Fortaleza
     networks:
