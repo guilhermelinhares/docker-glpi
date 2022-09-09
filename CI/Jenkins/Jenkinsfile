@@ -12,7 +12,12 @@ pipeline {
             steps {
                 script {
                     if (env.GLPI_VERSION == 'latest') {
-                        echo 'latest'
+                    sh '''
+                        TAG_URL=$(curl -s https://api.github.com/repos/glpi-project/glpi/releases/latest \
+                        | grep browser_download_url \
+                        | cut -d '"' -f 4)
+                        curl -s -L --create-dirs -o /usr/share/glpi "$TAG_URL"
+                        '''                   
                     } else {
                         echo 'Another Version'
                     }
