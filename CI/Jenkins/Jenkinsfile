@@ -1,11 +1,16 @@
 pipeline {
     agent any
+    environment {
+        Tag_Version = "curl -s https://api.github.com/repos/glpi-project/glpi/releases/${GLPI_VERSION} | grep tag_name | cut -d '"' -f 4"'
+    }
+
     stages {
         stage('Collect Variables') {
             steps {
                 echo "Version Choice is: ${GLPI_VERSION}"
                 echo "Branch or Tag Choice is: ${BRANCH_TAG}"
                 echo "SO Versions is: ${SO_VERSION}"
+                echo "TAG Version GLPI: ${Tag_Version}"
             }
         }
     }
