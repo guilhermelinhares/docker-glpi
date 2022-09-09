@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Collect Variables') {
             steps {
-                echo 'Version Choice is:' ${GLPI_VERSION}
-                echo 'Branch or Tag Choice is:' ${BRANCH_TAG}
-                echo 'SO Versions is:' ${SO_VERSION}
+                echo "Version Choice is: ${GLPI_VERSION}"
+                echo "Branch or Tag Choice is: ${BRANCH_TAG}"
+                echo "SO Versions is: ${SO_VERSION}"
             }
         }
     }
