@@ -8,7 +8,8 @@ pipeline {
             steps {
                 echo "Version Choice is: ${GLPI_VERSION}"
                 echo "Branch or Tag Choice is: ${BRANCH_TAG}"
-                echo "SO Versions is: ${SO_VERSION}"               
+                echo "SO Versions is: ${SO_VERSION}"   
+                echo "Folder GLPI is: ${PATH}"             
             }
         }
         stage('Prepare Environment') {
@@ -20,7 +21,7 @@ pipeline {
                         TAG_URL=$(curl -s https://api.github.com/repos/glpi-project/glpi/releases/latest \
                         | grep browser_download_url \
                         | cut -d '"' -f 4)
-                        wget -qO - "$TAG_URL" | sudo tar -xzvf - -C /usr/share/glpi/ --strip-component 1
+                        wget -qO - "$TAG_URL" | sudo tar -xzvf - -C ${PATH} --strip-component 1
                         '''                
                     } else {
                         echo 'Another Version'
