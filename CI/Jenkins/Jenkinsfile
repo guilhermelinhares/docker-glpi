@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH= '/usr/share/glpi'
+        PATH= '/usr/share/glpi/'
     }
     stages {
         stage('Collect Variables') {
@@ -15,13 +15,14 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 script {
-                    sh 'sudo mkdir ${PATH}'
                     if (env.GLPI_VERSION == 'latest') {
-                    sh '''
-                        TAG_URL=$(curl -s https://api.github.com/repos/glpi-project/glpi/releases/latest \
-                        | grep browser_download_url \
-                        | cut -d '"' -f 4)
-                        wget -qO - "$TAG_URL" | sudo tar -xzvf - -C ${PATH} --strip-component 1
+                        sh '''
+                            sudo rm -rf ${PATH} \
+                            sudo mkdir ${PATH}' \
+                            TAG_URL=$(curl -s https://api.github.com/repos/glpi-project/glpi/releases/latest \
+                            | grep browser_download_url \
+                            | cut -d '"' -f 4) \
+                            wget -qO - "$TAG_URL" | sudo tar -xzvf - -C ${PATH} --strip-component 1
                         '''                
                     } else {
                         echo 'Another Version'
