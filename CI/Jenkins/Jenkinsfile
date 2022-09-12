@@ -2,8 +2,8 @@
 pipeline {
     agent any
     environment {
-        FOLDER_GLPI ='/usr/share/glpi/'
-        TAG_URL = 'https://github.com/glpi-project/glpi/releases/tag'
+        FOLDER_GLPI ='/usr/share/'
+        TAG_URL = 'curl -s https://api.github.com/repos/glpi-project/glpi/releases/tags/"${GLPI_VERSION}" | grep browser_download_url'
     }
     stages {
         stage('Collect Variables') {
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     sh 'sudo rm -rf ${FOLDER_GLPI}'
                     sh 'sudo mkdir ${FOLDER_GLPI}'
-                    sh 'wget -qO - "${TAG_URL}/$GLPI_VERSION.tgz" | sudo tar -xzvf - -C ${FOLDER_GLPI} --strip-component 1'
+                    sh 'sudo wget ${TAG_URL} -P ${FOLDER_GLPI}'
                 }
             }
         }
