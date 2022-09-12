@@ -17,7 +17,7 @@ pipeline {
                 script {
                     sh 'sudo rm -rf ${FOLDER_GLPI}'
                     sh 'sudo mkdir ${FOLDER_GLPI}'
-                    sh 'sudo curl -s https://github.com/glpi-project/glpi/releases/download/${SO_VERSION}/glpi-${SO_VERSION}.tgz -P ${FOLDER_GLPI}'
+                    sh 'sudo curl -s https://github.com/glpi-project/glpi/releases/download/${GLPI_VERSION}/glpi-${GLPI_VERSION}.tgz -P ${FOLDER_GLPI}'
                 }
             }
         }
