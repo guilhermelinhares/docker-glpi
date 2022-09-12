@@ -3,7 +3,7 @@ pipeline {
     agent any
     environment {
         FOLDER_GLPI ='/usr/share/'
-        TAG_URL = 'curl -s https://api.github.com/repos/glpi-project/glpi/releases/tags/"${GLPI_VERSION}" | grep browser_download_url'
+        TAG_URL = 'curl -s https://api.github.com/repos/glpi-project/glpi/releases/tags/${GLPI_VERSION} | grep browser_download_url'
     }
     stages {
         stage('Collect Variables') {
