@@ -1,4 +1,4 @@
-/* groovylint-disable GStringExpressionWithinString */
+/* groovylint-disable GStringExpressionWithinString, NestedBlockDepth */
 pipeline {
     agent any
     environment {
@@ -17,8 +17,9 @@ pipeline {
                 script {
                     sh 'sudo rm -rf ${FOLDER_GLPI}'
                     sh 'sudo mkdir ${FOLDER_GLPI}'
-                    withEnv(['TAG_URL=curl -s https://api.github.com/repos/glpi-project/glpi/releases/tags/${SO_VERSION} | grep browser_download_url'])
-                    sh 'sudo wget ${TAG_URL} -P ${FOLDER_GLPI}'
+                    withEnv(['TAG_URL=curl -s https://api.github.com/repos/glpi-project/glpi/releases/tags/${SO_VERSION} | grep browser_download_url']){
+                        sh 'sudo wget ${TAG_URL} -P ${FOLDER_GLPI}'
+                    }
                 }
             }
         }
