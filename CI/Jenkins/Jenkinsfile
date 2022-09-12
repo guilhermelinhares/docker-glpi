@@ -1,30 +1,24 @@
+/* groovylint-disable GStringExpressionWithinString */
 pipeline {
     agent any
     environment {
-        FOLDER_GLPI='/usr/share/glpi/'
+        FOLDER_GLPI ='/usr/share/glpi/'
+        TAG_URL = 'https://github.com/glpi-project/glpi/releases/tag'
     }
     stages {
         stage('Collect Variables') {
             steps {
                 echo "Version Choice is: ${GLPI_VERSION}"
-                echo "Branch or Tag Choice is: ${BRANCH_TAG}"
-                echo "SO Versions is: ${SO_VERSION}"   
-                echo "Folder GLPI is: ${FOLDER_GLPI}"             
+                echo "SO Versions is: ${SO_VERSION}"
+                echo "Folder GLPI is: ${FOLDER_GLPI}"
             }
         }
         stage('Prepare Environment') {
             steps {
                 script {
-                    if (env.GLPI_VERSION == 'latest') {
-                        sh 'sudo rm -rf ${FOLDER_GLPI}'
-                        sh 'sudo mkdir ${FOLDER_GLPI}'
-                        sh '''TAG_URL=$(curl -s https://api.github.com/repos/glpi-project/glpi/releases/latest \
-                            | grep browser_download_url \
-                            | cut -d '"' -f 4)'''
-                        sh 'wget -qO - "$TAG_URL" | sudo tar -xzvf - -C ${FOLDER_GLPI} --strip-component 1'    
-                    } else {
-                        echo 'Another Version'
-                    }
+                    sh 'sudo rm -rf ${FOLDER_GLPI}'
+                    sh 'sudo mkdir ${FOLDER_GLPI}'
+                    sh 'wget -qO - "${TAG_URL}/$GLPI_VERSION.tgz" | sudo tar -xzvf - -C ${FOLDER_GLPI} --strip-component 1'
                 }
             }
         }
