@@ -22,10 +22,10 @@ services:
     privileged: true
     restart: unless-stopped
     volumes:
-    - ./glpi:/usr/share/nginx/glpi:rw
-    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:rw
-    - ./nginx/nginx.conf:/etc/nginx/nginx.conf:rw
-    - ./glpi/files/:/var/lib/glpi/files:rw
+    - ./glpi:/usr/share/nginx/glpi
+    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./glpi/files/:/var/lib/glpi/files
     hostname: glpi
     networks:
       - srv_glpi        
