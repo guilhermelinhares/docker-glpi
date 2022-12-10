@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    image: mysql:8.0.30
+    restart: always
+    env_file:
+    - ./config/db.env
+    networks:
+      - srv_glpi
+    volumes:     
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 3306
+  apache:
+    container_name: glpi
+    depends_on: 
+      - mysql
+    build:
+      context: .
+      dockerfile: ./apache/Dockerfile
+    privileged: true
+    restart: unless-stopped
+    volumes:
+    - ./glpi:/usr/share/nginx/glpi
+    - ./apache/files/etc/apache2/sites-available/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    - ./glpi/files/:/var/lib/glpi/files
+    hostname: glpi
+    networks:
+      - srv_glpi        
+    ports:
+      - "8087:80"  
+volumes:
+  mysql_data:
+
+networks:
+  srv_glpi:
+    driver: bridge

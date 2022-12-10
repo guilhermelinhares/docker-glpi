@@ -1,2 +1,4 @@
 /glpi
-alpine+nginx+phpfpm/glpi
+alpine_nginx/glpi
+alpine_apache/sources
+alpine_apache/glpi
