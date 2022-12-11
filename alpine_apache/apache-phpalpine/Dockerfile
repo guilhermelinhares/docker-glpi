@@ -2,7 +2,7 @@
 #https://www.php.net/manual/en/xmlrpc.installation.php
 
 ARG BUILDER_IMAGE=php:cli-alpine
-ARG APP_IMAGE=php:apache
+ARG APP_IMAGE=php:8.0-apache
 
 #####
 # Builder image
@@ -11,7 +11,6 @@ FROM $BUILDER_IMAGE AS builder
 
 # Copy composer binary from latest composer image.
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 
 # Install required system packages.
 RUN \
@@ -103,8 +102,8 @@ RUN apt-get update \
   # Clean sources list.
   && rm -rf /var/lib/apt/lists/*
 
-ADD ./files/etc/cron.d/glpi /etc/cron.d/glpi
-ADD ./files/opt/startup.sh /opt/startup.sh
+COPY ./files/etc/cron.d/glpi /etc/cron.d/glpi
+COPY ./files/opt/startup.sh /opt/startup.sh
 
 # Install GLPI crontab.
 RUN crontab -u www-data /etc/cron.d/glpi
