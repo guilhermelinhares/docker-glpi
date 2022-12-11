@@ -1,0 +1,33 @@
+#Ref -> @servicedeskbrasil#
+
+#Permission LOG GLPi
+*/5 * * * * chown -R apache:apache /var/log/glpi/*
+#
+
+#Sync de Usuarios AD/LDAP
+#00 22 * * * glpi-console glpi:ldap:synchronize_users -n
+#
+
+#Migrations tables for InnoDB
+0 21 * * * glpi-console glpi:migration:myisam_to_innodb
+#
+
+#Migrations Timestamps
+0 21 * * * glpi-console glpi:migration:timestamps
+#
+
+#Unlock Automatic Actions
+*/15 * * * * glpi-console glpi:task:unlock --all
+#
+
+#Unlock mail
+*/5 * * * * glpi-console glpi:task:unlock --task mailgate
+#
+
+#Notifications Queued
+*/5 * * * * glpi-console glpi:task:unlock --task queuednotification
+#
+
+#Cron GLPI
+*/1 * * * * php /var/www/html/glpi/front/cron.php &>/dev/null
+#
