@@ -1,4 +1,7 @@
 alpine_nginx/glpi
+alpine_nginx/glpi10
 alpine_apache/sources
 alpine_apache/glpi
+alpine_apache/glpi10
 alpine_apache/*.tgz
+glpi10
