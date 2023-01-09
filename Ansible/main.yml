@@ -1,0 +1,8 @@
+---
+- name: "Install GLPI"
+  hosts: localhost
+  become: true
+
+  roles:
+    - mysql
+    - glpi

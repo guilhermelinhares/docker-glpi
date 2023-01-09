@@ -1,10 +1,10 @@
-Alias /glpi "{{ glpi_path }}"
+Alias /glpi {{ glpi_path }}/glpi
 
 # Redirect configuration for multi-glpi install_oriation
 # You can set this value in each vhost configuration
 #SetEnv GLPI_CONFIG_DIR /etc/glpi
 
-<Directory "{{ glpi_path }}">
+<Directory {{ glpi_path }}/glpi>
     Options None
     AllowOverride Limit Options FileInfo
 
@@ -17,7 +17,7 @@ Alias /glpi "{{ glpi_path }}"
     </IfModule>
 </Directory>
 
-<Directory "{{ glpi_path }}"/install_ori>
+<Directory {{ glpi_path }}/glpi/install_ori>
 
     # Install is only allowed via local access (from the GLPI server).
     # Add your IP address if you need it for remote install_oriation,
@@ -50,29 +50,29 @@ Alias /glpi "{{ glpi_path }}"
     </IfModule>
 </Directory>
 
-<Directory "{{ glpi_path }}"/config>
+<Directory {{ glpi_path }}/glpi/config>
     Order Allow,Deny
     Deny from all
 </Directory>
 
-<Directory "{{ glpi_path }}"/locales>
+<Directory {{ glpi_path }}/glpi/locales>
     Order Allow,Deny
     Deny from all
 </Directory>
 
-<Directory "{{ glpi_path }}"/install_ori/mysql>
+<Directory {{ glpi_path }}/glpi/install_ori/mysql>
     Order Allow,Deny
     Deny from all
 </Directory>
 
-<Directory "{{ glpi_path }}"/scripts>
+<Directory {{ glpi_path }}/glpi/scripts>
     Order Allow,Deny
     Deny from all
 </Directory>
 
 # some people prefer a simple URL like http://glpi.example.com
 <VirtualHost *:80>
-  DocumentRoot "{{ glpi_path }}"
+  DocumentRoot {{ glpi_path }}/glpi
   ServerName {{ servername }}
 </VirtualHost>
 

@@ -1,2 +1,7 @@
 ---
 # handlers file for mysql
+- name: Restart Sql
+  service:
+    name: "{{ sql_daemon }}"
+    state: restarted
+  when: ansible_distribution == "Ubuntu"

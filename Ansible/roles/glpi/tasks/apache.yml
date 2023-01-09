@@ -4,26 +4,30 @@
     name: apache2
     state: present
     update_cache: true
-    when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu"
 
 - name: Copy webserver conf file
   template:
     src: glpi.conf.j2
-    dest: "{{ webserver_path }}"
-    when: ansible_distribution == "Ubuntu"
+    dest: "{{ webserver_path }}/glpi.conf"
+  when: ansible_distribution == "Ubuntu"
 
 - name: Create a symbolic link webserver conf
   file:
-    src: "{{ webserver_path }}"
-    dest: "{{ webserver_symlinks }}"
+    src: "{{ webserver_path }}/glpi.conf"
+    dest: "{{ webserver_symlinks }}/glpi.conf"
     owner: root
     group: root
     state: link
-    when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu"
 
 - name: Start and Enable Apache
   service:
     name: apache2
     enabled: yes
     state: started
-    when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu"
+  notify:
+    - Restart Apache
+
+

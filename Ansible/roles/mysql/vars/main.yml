@@ -1,2 +1,21 @@
 ---
-# vars file for mysql
+# vars file for mariadb
+sql_daemon: mariadb
+sql_servicesrv_name: mariadb-server
+sql_servicecl_name: mariadb-client
+
+db_port: 3306
+
+_sql_default_socket:
+  default: /var/run/mysql/mysql.sock
+  Ubuntu: /var/run/mysql/mysql.sock
+
+sql_default_socket: "{{ _sql_default_socket[ansible_os_family] | default(_sql_default_socket['default']) }}"
+
+
+db:
+  glpi:
+    name: "{{ sql_new_db }}"
+    user: "{{ sql_new_user_name }}"
+    userhost: localhost
+    password: "{{ sql_new_user_passwd }}"

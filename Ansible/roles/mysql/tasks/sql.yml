@@ -1,7 +1,41 @@
 ---
-- name: Install Sql "{{ sql_daemon }}"
+- name: Install Sql Server {{ sql_daemon }}
   apt:
-    name: "{{ sql_service_name }}"
-    status: present
+    name: "{{ sql_servicesrv_name }}"
+    state: present
     update_cache: true
   when: ansible_distribution == "Ubuntu"
+
+- name: Install Sql Client {{ sql_daemon }}
+  apt:
+    name: "{{ sql_servicecl_name }}"
+    state: present
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Start and Enable Sql
+  service:
+    name: "{{ sql_daemon }}"
+    enabled: yes
+    state: started
+  when: ansible_distribution == "Ubuntu"
+  notify:
+    - Restart Sql
+
+- name: Install dependence pip 
+  pip:
+    name: PyMySQL
+    executable: pip3.10
+
+- name: Set root Password
+  mysql_user: 
+    login_password: root
+    check_implicit_admin: yes 
+    name: root
+    host: '%'
+    password: "{{ sql_root_passwd }}" 
+    state: present 
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - ::1

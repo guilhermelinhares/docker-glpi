@@ -1,2 +1,19 @@
 ---
 # defaults file for mysql
+
+#Version sql
+sql_daemon: "{{ sql_daemon }}"
+sql_service_name: "{{ sql_service_name }}"
+db_port: "{{ db_port }}"
+
+#Sql data connections User
+sql_new_user_name: glpi
+sql_new_user_passwd: glpi
+sql_new_db: glpi
+
+#Sql data connections Root
+sql_root_user: root
+sql_root_passwd: 1da19518b75caf16aff3a6a7c48110ed
+sql_root_home: /root
+
+sql_socket: '{{ sql_default_socket }}'
