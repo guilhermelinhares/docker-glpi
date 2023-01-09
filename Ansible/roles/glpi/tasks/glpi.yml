@@ -1,0 +1,15 @@
+---
+- name: Extract and download glpi
+  unarchive:
+    src: "{{ glpi_url }}"
+    dest: "{{ glpi_path }}"
+    remote_src: yes
+
+- name: Permission glpi {{ glpi_path }}/glpi
+  file:
+    path: "{{ glpi_path}}/glpi"
+    state: directory
+    recurse: true
+    owner: "{{ glpi_owner }}"
+    group: "{{ glpi_group }}"
+    mode: '0775'

@@ -1,0 +1,19 @@
+---
+- name: Install Prerequistes (Ubuntu)
+  apt:
+    name: "{{req_pack_ubuntu}}"
+    state: present
+    when: ansible_distribution == "Ubuntu"
+  
+- name: Add repository PHP (Ubuntu)
+  apt_repository: 
+    repo: 'ppa:ondrej/php'
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install PHP package (Ubuntu)
+  apt:
+    name: "{{ pack_v8_1 }}"
+    update_cache: yes
+    state: present
+    when: ansible_distribution == "Ubuntu"

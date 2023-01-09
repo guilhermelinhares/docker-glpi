@@ -1,0 +1,12 @@
+---
+# defaults file for glpi
+#glpi-env
+glpi_version: 9.5.11
+glpi_version_pack: glpi-9.5.11.tgz
+glpi_path: /usr/share
+glpi_url: "https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/{{ glpi_version_pack }}"
+glpi_owner: www-data
+glpi_group: www-data
+
+#apache_env
+servername: localhost

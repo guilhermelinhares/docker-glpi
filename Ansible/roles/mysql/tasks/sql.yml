@@ -1,0 +1,7 @@
+---
+- name: Install Sql "{{ sql_daemon }}"
+  apt:
+    name: "{{ sql_service_name }}"
+    status: present
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"

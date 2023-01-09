@@ -1,0 +1,29 @@
+---
+# vars file for glpi
+webserver: apache
+webserver_path: /etc/apache2/sites-available
+webserver_symlinks: /etc/apache2/sites-enabled
+php_version: "8.0"
+req_pack_ubuntu:
+  - lsb-release
+  - apt-transport-https
+  - ca-certificates
+  - software-properties-common
+  - wget
+  - zip
+pack_v8_1:
+  - php8.1-cli
+  - php8.1-imap
+  - php8.1-ldap
+  - php8.1-xmlrpc
+  - php8.1-soap
+  - php8.1-curl
+  - php8.1-snmp
+  - php8.1-zip
+  - php8.1-apcu
+  - php8.1-gd
+  - php8.1-mbstring
+  - php8.1-mysql
+  - php8.1-xml
+  - php8.1-bz2
+  - php8.1-intl
