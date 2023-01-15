@@ -13,7 +13,7 @@
 
 - name: Install PHP package (Ubuntu)
   apt:
-    name: "{{ pack_v8_1 }}"
+    name: "{{ pack_v8_0 }}"
     update_cache: yes
     state: present
   when: ansible_distribution == "Ubuntu"
