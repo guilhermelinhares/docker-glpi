@@ -1,12 +1,12 @@
 ---
 - name: Extract and download glpi
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ glpi_url }}"
     dest: "{{ glpi_path }}"
     remote_src: yes
 
 - name: Permission glpi {{ glpi_path }}/glpi
-  file:
+  ansible.builtin.file:
     path: "{{ glpi_path}}/glpi"
     state: directory
     recurse: true

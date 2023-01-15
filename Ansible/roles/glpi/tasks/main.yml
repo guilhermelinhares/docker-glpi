@@ -1,10 +1,13 @@
 ---
 # tasks file for glpi
 - name: Include task list webserver
-  include_tasks: "{{ webserver }}.yml"
+  ansible.builtin.include_tasks: 
+    file: "{{ webserver }}.yml"
 
 - name: Include task list php
-  include_tasks: php.yml
+  ansible.builtin.include_tasks: 
+    file: php.yml
 
 - name: Include task list glpi
-  include_tasks: glpi.yml
+  ansible.builtin.include_tasks: 
+    file: glpi.yml

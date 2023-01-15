@@ -1,0 +1,98 @@
+---
+# https://docs.percona.com/percona-server/8.0/installation/apt_repo.html
+# https://docs.percona.com/percona-server/8.0/installation/post-installation.html
+# https://repo.percona.com/apt/
+# https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+
+- name: Process to install Percona-Server (Ubuntu)
+  when: ansible_distribution == "Ubuntu"
+  block:
+
+    - name: "Install Dependencies Mysql"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: true
+
+    - name: Fetch the repository packages from Percona web
+      ansible.builtin.apt:
+        deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
+        update_cache: true
+
+    - name: Enable Percona Release 8.0
+      command: percona-release setup {{ percona_release }}
+
+    - name: Install Percona Server {{ sql_daemon }}
+      ansible.builtin.apt:
+        name: "{{ sql_servicesrv_name }}"
+        state: present
+        update_cache: true
+
+    - name: Configure configuration file root user
+      template:
+        src:  my.cnf.j2
+        dest: '~root/.my.cnf'
+        owner: root
+        group: root
+        mode: 0600
+
+    - name: Start and Enable Sql
+      service:
+        name: "{{ sql_daemon }}"
+        enabled: yes
+        state: started
+      notify:
+        - Restart Mysql
+      
+    - name: Install Supporting Software
+      ansible.builtin.apt:
+        name: software-properties-common
+        update_cache: true
+
+    - name: Add Deadsnakes PPA
+      ansible.builtin.apt_repository: 
+        repo: 'ppa:deadsnakes/ppa'
+        state: present
+    
+    - name: Update root Password
+      community.mysql.mysql_user:
+        name: root
+        password: "{{ sql_root_passwd }}" 
+        host: "{{ item }}"
+        check_implicit_admin: yes 
+      with_items:
+        - localhost
+        - 127.0.0.1
+        - ::1
+
+    - name: Removes anonymous users
+      community.mysql.mysql_user: 
+        name: '' 
+        host: "{{ item }}" 
+        state: absent
+      with_items:
+        - "{{ ansible_hostname }}"
+        - localhost
+
+    - name: Removes the test database
+      community.mysql.mysql_db: 
+        name: test 
+        state: absent
+    
+    - name: Create the database - GLPI
+      community.mysql.mysql_db:
+        name: "{{ db_glpi }}"
+        collation: utf8mb4_general_ci
+        state: present
+   
+    - name: Create User database - GLPI
+      community.mysql.mysql_user:
+        name: "{{ db_user_name }}"
+        password: "{{ db_glpi_passwd }}"
+        update_password: on_create
+        host: "{{ item }}"
+        priv: "{{ db_glpi }}\_%.*:ALL"
+        state: present
+      with_items:
+        - "{{ ansible_hostname }}"
+        - localhost

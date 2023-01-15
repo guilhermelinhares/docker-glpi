@@ -1,0 +1,5 @@
+---
+# tasks file for mysql
+- name: Include task list percona
+  ansible.builtin.include_tasks: 
+    file: percona.yml

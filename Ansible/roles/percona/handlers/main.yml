@@ -1,6 +1,6 @@
 ---
 # handlers file for mysql
-- name: Restart Sql
+- name: Restart Mysql
   service:
     name: "{{ sql_daemon }}"
     state: restarted

@@ -1,4 +1,0 @@
----
-# tasks file for mysql
-- name: Include task list sql
-  include_tasks: sql.yml
