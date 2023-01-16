@@ -1,0 +1,30 @@
+---
+- name: Process to install Xdebug 3 (Ubuntu)
+  when: ansible_distribution == "Ubuntu"
+  block:
+    - name: Install Xdebug 3 + PhpCGI - PHP {{ php_version }}
+      ansible.builtin.apt:
+        name: "{{ php_xdebug }}"
+        state: present
+    
+    - name: Update PHP Version {{ php_version }}
+      community.general.alternatives:
+        name: php
+        path: "{{ path_php_version }}"
+
+    - name: Update PHP Phar Version {{ php_version }}
+      community.general.alternatives:
+        name: phar
+        path: "{{ path_phar_version }}"
+
+    - name: Update PHP Phar_Phar Version {{ php_version }}
+      community.general.alternatives:
+        name: phar.phar
+        path: "{{ path_phar_phar_version }}"
+    
+    - name: Copy Xdebug.ini
+      template:
+        src: 20-xdebug.ini.j2
+        dest: "{{ path_conf_d }}/20-xdebug.ini"
+      notify: 
+        - Restart Apache

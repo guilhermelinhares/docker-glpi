@@ -3,10 +3,11 @@
 webserver: apache
 webserver_path: /etc/apache2/sites-available
 webserver_symlinks: /etc/apache2/sites-enabled
-php_version: "8.0"
+php_version: 8.0
 path_php_version: /usr/bin/php{{ php_version }}
 path_phar_version: /usr/bin/phar{{ php_version }}
 path_phar_phar_version: /usr/bin/phar.phar{{ php_version }}
+path_conf_d: /etc/php/{{ php_version }}/cli/conf.d/
 
 req_pack_ubuntu:
   - lsb-release
@@ -72,3 +73,8 @@ pack_latest:
   - php-xml
   - php-bz2
   - php-intl
+
+php_xdebug:
+  - php-xdebug
+  - php{{ php_version }}-xdebug
+  - php{{ php_version }}-cgi

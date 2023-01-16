@@ -11,3 +11,7 @@
 - name: Include task list glpi
   ansible.builtin.include_tasks: 
     file: glpi.yml
+
+- name: Include task list Xdebug
+  ansible.builtin.include_tasks:
+    file: xdebug.yml
