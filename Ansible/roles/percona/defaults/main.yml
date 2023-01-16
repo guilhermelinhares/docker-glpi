@@ -5,7 +5,8 @@
 sql_daemon: "{{ sql_daemon }}"
 sql_service_name: "{{ sql_service_name }}"
 db_port: "{{ db_port }}"
-percona_release: ps80
+percona_release: "{{ percona_release_5 }}"
+percona_server: "{{ percona_server5_7 }}"
 
 #Sql data connections User
 db_user_name: glpi

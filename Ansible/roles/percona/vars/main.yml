@@ -1,25 +1,19 @@
 ---
 # vars file for mariadb
 sql_daemon: mysql
-sql_servicesrv_name: percona-server-server
+percona_server8_0: percona-server-server
+percona_server5_7: 
+  - percona-server-server-5.7
+  - percona-server-common-5.7 
 percona_socket: /var/run/mysqld/mysqld.sock
+percona_release_8: ps80
+percona_release_5: ps57
+percona_version: 5.7
 
 db_port: 3306
 
-# _sql_default_socket:
-#   default: /var/run/mysql/mysql.sock
-#   Ubuntu: /var/run/mysql/mysql.sock
-
-# sql_default_socket: "{{ _sql_default_socket[ansible_os_family] | default(_sql_default_socket['default']) }}"
-
 phyton_version: 3.8
 
-db:
-  glpi:
-    name: "{{ sql_new_db }}"
-    user: "{{ sql_new_user_name }}"
-    userhost: localhost
-    password: "{{ sql_new_user_passwd }}"
 
 # Packages
 # Install GnuPG, the GNU Privacy Guard

@@ -19,12 +19,12 @@
         deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
         update_cache: true
 
-    - name: Enable Percona Release 8.0
-      command: percona-release setup {{ percona_release }}
+    - name: Enable Percona Release {{ percona_version }}
+      command: percona-release setup "{{ percona_release }}"
 
     - name: Install Percona Server {{ sql_daemon }}
       ansible.builtin.apt:
-        name: "{{ sql_servicesrv_name }}"
+        name: "{{ percona_server }}"
         state: present
         update_cache: true
 
@@ -91,7 +91,7 @@
         password: "{{ db_glpi_passwd }}"
         update_password: on_create
         host: "{{ item }}"
-        priv: "{{ db_glpi }}\_%.*:ALL"
+        priv: "{{ db_glpi }}.*:ALL"
         state: present
       with_items:
         - "{{ ansible_hostname }}"

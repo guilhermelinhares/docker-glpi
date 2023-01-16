@@ -2,19 +2,39 @@
 - name: Process to install Php (Ubuntu)
   when: ansible_distribution == "Ubuntu"
   block:
+    - name: Install Prerequistes
+      ansible.builtin.apt:
+        name: "{{ req_pack_ubuntu }}"
+        state: present
 
-  - name: Install Prerequistes (Ubuntu)
-    ansible.builtin.apt:
-      name: "{{req_pack_ubuntu}}"
-      state: present
-    
-  - name: Add repository PHP (Ubuntu)
-    ansible.builtin.apt_repository: 
-      repo: 'ppa:ondrej/php'
-      state: present
+    - name: Add repository PHP
+      ansible.builtin.apt_repository:
+        repo: "ppa:ondrej/php"
+        state: present
 
-  - name: Install PHP package (Ubuntu)
-    ansible.builtin.apt:
-      name: "{{ pack_v8_0 }}"
-      update_cache: yes
-      state: present
+    - name: Install PHP package - 7.4
+      ansible.builtin.apt:
+        name: "{{ pack_v7_4 }}"
+        update_cache: yes
+        state: present
+
+    - name: Install PHP package {{ php_version }}
+      ansible.builtin.apt:
+        name: "{{ pack_v8_0 }}"
+        update_cache: yes
+        state: present
+
+    - name: Update PHP Version {{ php_version }}
+      community.general.alternatives:
+        name: php
+        path: "{{ path_php_version }}"
+
+    - name: Update PHP Phar Version {{ php_version }}
+      community.general.alternatives:
+        name: phar
+        path: "{{ path_phar_version }}"
+
+    - name: Update PHP Phar_Phar Version {{ php_version }}
+      community.general.alternatives:
+        name: phar.phar
+        path: "{{ path_phar_phar_version }}"

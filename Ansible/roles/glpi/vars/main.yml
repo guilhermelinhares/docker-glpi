@@ -4,6 +4,10 @@ webserver: apache
 webserver_path: /etc/apache2/sites-available
 webserver_symlinks: /etc/apache2/sites-enabled
 php_version: "8.0"
+path_php_version: /usr/bin/php{{ php_version }}
+path_phar_version: /usr/bin/phar{{ php_version }}
+path_phar_phar_version: /usr/bin/phar.phar{{ php_version }}
+
 req_pack_ubuntu:
   - lsb-release
   - apt-transport-https
@@ -11,6 +15,30 @@ req_pack_ubuntu:
   - software-properties-common
   - wget
   - zip
+
+pack_v7_4:
+  - php7.4
+  - php7.4-curl
+  - php7.4-zip
+  - php7.4-gd
+  - php7.4-intl
+  - php7.4-intl
+  - php-pear
+  - php7.4-imagick
+  - php7.4-bz2
+  - php7.4-imap
+  - php-memcache
+  - php7.4-pspell
+  - php7.4-tidy
+  - php7.4-xmlrpc
+  - php7.4-xsl
+  - php7.4-mbstring
+  - php7.4-ldap
+  - php-cas
+  - php7.4-apcu 
+  - libapache2-mod-php7.4
+  - php7.4-mysql
+
 pack_v8_0:
   - php8.0-cli
   - php8.0-imap
@@ -27,3 +55,20 @@ pack_v8_0:
   - php8.0-xml
   - php8.0-bz2
   - php8.0-intl
+
+pack_latest:
+  - php-cli
+  - php-imap
+  - php-ldap
+  - php-xmlrpc
+  - php-soap
+  - php-curl
+  - php-snmp
+  - php-zip
+  - php-apcu
+  - php-gd
+  - php-mbstring
+  - php-mysql
+  - php-xml
+  - php-bz2
+  - php-intl

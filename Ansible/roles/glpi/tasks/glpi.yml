@@ -13,3 +13,14 @@
     owner: "{{ glpi_owner }}"
     group: "{{ glpi_group }}"
     mode: '0775'
+
+- name: Create a symbolic link glpi-console
+  ansible.builtin.file:
+    src: "{{ glpi_path }}/glpi/bin/console"
+    dest: "{{ glpi_console_symlinks }}"
+    owner: root
+    group: root
+    state: link 
+
+# - name: Install Automatic GLPI
+#   command: "glpi-console glpi:database:install -Lpt_BR -H {{ ansible_hostname }} -d {{ db_glpi }} -u {{ db_user_name }} -p {{ db_glpi_passwd }} --no-telemetry --force -n"
