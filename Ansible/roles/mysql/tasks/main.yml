@@ -1,0 +1,11 @@
+---
+# tasks file for mysql
+- name: Include task list Mariadb
+  ansible.builtin.include_tasks: 
+    file: mariadb.yml
+  when: ansible_distribution == "Ubuntu"
+  
+- name: Include Task List Percona
+  ansible.builtin.include_tasks: 
+    file: percona.yml
+  when: ansible_distribution == "Ubuntu" and ansible_architecture != "aarch64"

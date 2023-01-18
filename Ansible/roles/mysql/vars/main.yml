@@ -1,0 +1,62 @@
+---
+# vars file for mariadb
+sql_daemon: mysql
+percona_server8_0: percona-server-server
+percona_server5_7: 
+  - percona-server-server-5.7
+  - percona-server-common-5.7 
+percona_socket: /var/run/mysqld/mysqld.sock
+percona_release_8: ps80
+percona_release_5: ps57
+percona_version: 8.0
+
+mariadb_package: default-mysql-server
+mariadb_version: 10.3
+mariadb_socket: /var/run/mysqld/mysqld.sock
+# mariadb_apt_key: 0xF1656F24C74CD1D8
+# mariadb_repository: 'deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_version }}/ubuntu jammy main'
+mariadb_server: mariadb-server
+mariadb_conf_server: /etc/mysql/conf.d/server.cnf
+mariadb_conf_client: /etc/mysql/conf.d/client.cnf
+
+services_mysql:
+  - mysql
+  - mariadb
+
+db_port: 3306
+
+# Packages
+# Install GnuPG, the GNU Privacy Guard
+# Install dependencies Phyton3 + Phyton Dependencies Ansible + Mysql
+percona_python_packages_ubuntu:
+  - gnupg2 
+  - curl
+  - libmysqlclient-dev
+  - python-dev
+  - python-pip
+  - python-mysqldb
+  - python3-dev
+  - python3-pip
+  - python3-pymysql
+  - python3-mysqldb
+
+mariadb_python_packages_ubuntu:
+  - gnupg2 
+  - curl
+  - python3-pip
+  - python3-pymysql
+  - python3-mysqldb
+  - build-essential
+  - zlib1g-dev 
+  - libncurses5-dev
+  - libgdbm-dev 
+  - libnss3-dev
+  - libssl-dev
+  - libreadline-dev
+  - libffi-dev
+  - wget
+
+mariadb_packages:
+  - "{{ mariadb_server }}"
+  - mariadb-client
+  - mariadb-common 

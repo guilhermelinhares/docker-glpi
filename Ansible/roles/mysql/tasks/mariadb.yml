@@ -1,0 +1,73 @@
+---
+
+- name: "Install Dependencies Python Mariadb"
+  ansible.builtin.apt:
+    name: "{{ mariadb_python_packages_ubuntu }}"
+    state: present
+
+- name: Install software-properties-common
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: present
+
+- name: Install Mariadb Packages
+  ansible.builtin.apt:
+    name: "{{ mariadb_packages }}"
+    state: present
+    update_cache: true
+
+- name: Start and Enable Mariadb
+  service:
+    name: mariadb
+    enabled: yes
+    state: started
+
+- name: Configure configuration file root user
+  template:
+    src:  root_my.cnf.j2
+    dest: '~root/.my.cnf'
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Set root password
+  community.mysql.mysql_user:
+    login_host: 'localhost'
+    login_user: 'root'
+    login_password: ''
+    name: 'root'
+    password: "{{ sql_root_passwd }}"
+    login_unix_socket: "{{ mariadb_socket }}"
+    state: present
+
+- name: Removes anonymous users
+  community.mysql.mysql_user: 
+    name: '' 
+    host: "{{ item }}" 
+    state: absent
+  with_items:
+    - "{{ ansible_hostname }}"
+    - localhost
+
+- name: Removes the test database
+  community.mysql.mysql_db: 
+    name: test 
+    state: absent
+
+- name: Create the database - GLPI
+  community.mysql.mysql_db:
+    name: "{{ db_glpi }}"
+    collation: utf8mb4_general_ci
+    state: present
+
+- name: Create User database - GLPI
+  community.mysql.mysql_user:
+    name: "{{ db_user_name }}"
+    password: "{{ db_glpi_passwd }}"
+    update_password: on_create
+    host: "{{ item }}"
+    priv: "{{ db_glpi }}.*:ALL"
+    state: present
+  with_items:
+    - "{{ ansible_hostname }}"
+    - localhost

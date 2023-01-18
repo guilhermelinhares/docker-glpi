@@ -1,12 +1,16 @@
 ---
 # defaults file for mysql
 
-#Version sql
+#Version sql Percona
 sql_daemon: "{{ sql_daemon }}"
 sql_service_name: "{{ sql_service_name }}"
 db_port: "{{ db_port }}"
-percona_release: "{{ percona_release_5 }}"
-percona_server: "{{ percona_server5_7 }}"
+percona_release: "{{ percona_release_8 }}"
+percona_server: "{{ percona_server8_0 }}"
+
+#Version Mysql
+mysql_server: "{{ mariadb_server }}"
+
 
 #Sql data connections User
 db_user_name: glpi

@@ -3,3 +3,10 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [glpi_srv]
 localhost
+
+[oracle]
+129.146.29.25
+
+#[oracle:vars]
+#ansible_ssh_user=Ubuntu
+#ansible_ssh_private_key_file=/home/guilherme/.ssh/ssh-key-2022-10-18.key.pub

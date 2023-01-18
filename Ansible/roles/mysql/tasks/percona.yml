@@ -4,13 +4,16 @@
 # https://repo.percona.com/apt/
 # https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
 
+# - name: Print all available facts
+#   ansible.builtin.debug:
+#     var: ansible_architecture
+
 - name: Process to install Percona-Server (Ubuntu)
-  when: ansible_distribution == "Ubuntu"
   block:
 
-    - name: "Install Dependencies Mysql"
+    - name: "Install Dependencies Mysql(Percona)"
       ansible.builtin.apt:
-        name: "{{ packages }}"
+        name: "{{ percona_python_packages_ubuntu }}"
         state: present
         update_cache: true
 
@@ -27,23 +30,25 @@
         name: "{{ percona_server }}"
         state: present
         update_cache: true
+      
+- name: Process to Configure Percona-Server DB (Ubuntu)
+  block:
 
     - name: Configure configuration file root user
       template:
-        src:  my.cnf.j2
+        src:  root_my.cnf.j2
         dest: '~root/.my.cnf'
         owner: root
         group: root
         mode: 0600
 
-    - name: Start and Enable Sql
+    - name: Stop and Enable Sql
       service:
         name: "{{ sql_daemon }}"
         enabled: yes
-        state: started
-      notify:
-        - Restart Mysql
-      
+        state: stopped
+
+        
     - name: Install Supporting Software
       ansible.builtin.apt:
         name: software-properties-common
@@ -61,6 +66,7 @@
         host: "{{ item }}"
         check_implicit_admin: yes 
       with_items:
+        - "{{ ansible_hostname }}"
         - localhost
         - 127.0.0.1
         - ::1
@@ -84,7 +90,7 @@
         name: "{{ db_glpi }}"
         collation: utf8mb4_general_ci
         state: present
-   
+  
     - name: Create User database - GLPI
       community.mysql.mysql_user:
         name: "{{ db_user_name }}"
@@ -96,3 +102,5 @@
       with_items:
         - "{{ ansible_hostname }}"
         - localhost
+
+  
