@@ -25,6 +25,14 @@
     - name: Copy Xdebug.ini
       template:
         src: 20-xdebug.ini.j2
-        dest: "{{ path_conf_d }}/20-xdebug.ini"
+        dest: "{{ xdebug_path }}/xdebug.ini"
+    
+    - name: Create a symbolic link xdebug
+      ansible.builtin.file:
+        src: "{{ xdebug_path }}/xdebug.ini"
+        dest: "{{ xdebug_symlinks }}/20-xdebug.ini"
+        owner: root
+        group: root
+        state: link
       notify: 
         - Restart Apache

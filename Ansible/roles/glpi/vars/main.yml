@@ -7,7 +7,8 @@ php_version: 8.0
 path_php_version: /usr/bin/php{{ php_version }}
 path_phar_version: /usr/bin/phar{{ php_version }}
 path_phar_phar_version: /usr/bin/phar.phar{{ php_version }}
-path_conf_d: /etc/php/{{ php_version }}/cli/conf.d/
+xdebug_path: /etc/php/{{ php_version }}/mods-available/
+xdebug_symlinks: /etc/php/{{ php_version }}/cli/conf.d/
 
 req_pack_ubuntu:
   - lsb-release
@@ -22,7 +23,6 @@ pack_v7_4:
   - php7.4-curl
   - php7.4-zip
   - php7.4-gd
-  - php7.4-intl
   - php7.4-intl
   - php-pear
   - php7.4-imagick
@@ -41,21 +41,23 @@ pack_v7_4:
   - php7.4-mysql
 
 pack_v8_0:
+  - php8.0
+  - php8.0-curl
+  - php8.0-zip
+  - php8.0-gd
+  - php8.0-intl
+  - php8.0-bz2
+  - php8.0-xmlrpc
+  - php8.0-mbstring
+  - php8.0-ldap
   - php8.0-cli
   - php8.0-imap
-  - php8.0-ldap
-  - php8.0-xmlrpc
   - php8.0-soap
-  - php8.0-curl
   - php8.0-snmp
-  - php8.0-zip
   - php8.0-apcu
-  - php8.0-gd
-  - php8.0-mbstring
   - php8.0-mysql
   - php8.0-xml
-  - php8.0-bz2
-  - php8.0-intl
+  - php8.0-dev
 
 pack_latest:
   - php-cli
